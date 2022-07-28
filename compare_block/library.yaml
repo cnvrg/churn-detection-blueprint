@@ -1,0 +1,29 @@
+title: Churn Compare
+version: 1.0.0
+description: comparison code for choosing the champion model
+icon: python
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+command: python3 compare.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+language: python3
+
+arguments: []
+
+conditions:
+- target: 0.0
+  task:
+  objective: max
+  tag_key: accuracy_score
+  value: ''

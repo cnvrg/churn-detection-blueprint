@@ -1,0 +1,50 @@
+title: Churn Naive Bayes
+version: 1.0.0
+description: churn prediction using naive bayes algorithm
+icon: python
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+command: python3 naive_bayes_train.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+language: python3
+
+arguments:
+  - key: X_train
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/X_train.csv'
+  - key: X_test
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/X_test.csv'
+  - key: y_train
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/y_train.csv'
+  - key: y_test
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/y_test.csv'
+  - key: var_smoothing
+    type: 'discrete'
+    values:
+      - '0.01'
+  - key: threshold
+    type: 'discrete'
+    values:
+      - '0.8'
+  - key: id_column
+    type: 'discrete'
+    values:
+      - ''

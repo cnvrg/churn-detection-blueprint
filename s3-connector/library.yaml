@@ -1,0 +1,39 @@
+title: S3 Connector3
+version: 1.0.0
+description: "Read data from s3"
+icon: python
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+  - data
+  - connector
+
+command: python s3_connector.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+
+language: python3
+
+arguments:
+  - key: endpoint
+    type: 'categorical'
+    values:
+      - 'https://s3.amazonaws.com download'
+  - key: bucketname
+    type: 'categorical'
+    values: []
+  - key: localdir
+    type: 'categorical'
+    values: []
+  - key: prefix
+    type: 'categorical'
+    values: []

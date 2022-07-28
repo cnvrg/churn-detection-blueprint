@@ -1,0 +1,62 @@
+title: Churn Random Forest
+version: 1.0.0
+description: churn prediction using random forest
+icon: python
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+command: python3 random_forest_train.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+language: python3
+
+arguments:
+  - key: X_train
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/X_train.csv'
+  - key: X_test
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/X_test.csv'
+  - key: y_train
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/y_train.csv'
+  - key: y_test
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/y_test.csv'
+  - key: n_estimators
+    type: 'discrete'
+    values:
+      - '10'
+  - key: max_features
+    type: 'categorical'
+    values:
+      - 'auto'
+  - key: min_samples_split
+    type: 'discrete'
+    values:
+      - '5'
+  - key: min_samples_leaf
+    type: 'discrete'
+    values:
+      - '2'
+  - key: max_depth
+    type: 'discrete'
+    values:
+      - '4'
+  - key: threshold
+    type: 'discrete'
+    values:
+      - '0.8'

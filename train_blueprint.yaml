@@ -1,0 +1,440 @@
+title: Churn Predict Train
+version: 1.0.0
+description: Training Churn Model to find out, likely to churn customers
+long_description: This blueprint chooses the best model out of 4 different algorithms to find out which model has churned, based on the metrics like precision, recall and f1 score.
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+
+tasks:
+  - title: S3 Connector
+    top: 300
+    left: 0
+
+    type: exec
+
+    library: s3-connector
+    library_version: 1.0.0
+
+    command: python s3_connector.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    params:
+      - key: endpoint
+        type: 'categorical'
+        values:
+          - 'http://s3.amazonaws.com download'
+      - key: bucketname
+        type: 'categorical'
+        values:
+          - 'libhub-readme'
+      - key: localdir
+        type: 'categorical'
+        values:
+          - '/cnvrg'
+      - key: prefix
+        type: 'categorical'
+        values:
+          - 'churn_data/'
+
+  - title: Data-Preprocessing
+    top: 400
+    left: 100
+
+    type: exec
+
+    library: churn-data-preprocess
+    library_version: 1.0.0
+
+    command: python3 data_preprocessing.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    params:
+      - key: churn_data
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn_data/churn.csv'
+      - key: id_column
+        type: 'categorical'
+        values:
+          - 'customerID'
+      - key: label_encoding
+        type: 'categorical'
+        values:
+          - "PaymentMethod,InternetService"
+      - key: scaler
+        type: 'discrete'
+        values:
+          - 'Minmax'
+      - key: do_scaling
+        type: 'categorical'
+        values:
+           - "Yes"
+  - title: Train Test Split
+    top: 400
+    left: 300
+
+    type: exec
+
+    library: churn-train-test-split
+    library_version: 1.0.0
+
+    command: python3 tts.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+    
+    params:
+      - key: preprocessed_data
+        type: 'categorical'
+        values:
+           - '/input/data_preprocessing/data_df.csv'
+  - title: Logistic Regression
+    top: 100
+    left: 500
+
+    type: exec
+
+    library: churn-logistic-regression
+    library_version: 1.0.0
+
+    command: python3 logistic_train.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    params:      
+      - key: X_train
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/X_train.csv'
+      - key: X_test
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/X_test.csv'
+      - key: y_train
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/y_train.csv'
+      - key: y_test
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/y_test.csv'
+      - key: penalty
+        type: 'categorical'
+        values:
+          - 'elasticnet'
+      - key: l1_ratio
+        type: 'discrete'
+        values:
+          - '0.5'
+      - key: solver
+        type: 'categorical'
+        values:
+          - 'saga'
+      - key: max_iter
+        type: 'discrete'
+        values:
+          - '100'
+      - key: threshold
+        type: 'discrete'
+        values:
+          - '0.8'
+      - key: inv_reg_strength
+        type: 'discrete'
+        values:
+          - '0.4'
+      - key: id_column
+        type: 'categorical'
+        values:
+          - 'customerID'
+
+          
+  - title: Random Forest
+    top: 200
+    left: 500
+
+    type: exec
+
+    library: churn-random-forest
+    library_version: 1.0.0
+
+    command: python3 random_forest_train.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    params:
+      - key: X_train
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/X_train.csv'
+      - key: X_test
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/X_test.csv'
+      - key: y_train
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/y_train.csv'
+      - key: y_test
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/y_test.csv'
+      - key: n_estimators
+        type: 'discrete'
+        values:
+          - '10'
+      - key: max_features
+        type: 'categorical'
+        values:
+          - 'auto'
+      - key: min_samples_split
+        type: 'discrete'
+        values:
+          - '5'
+      - key: min_samples_leaf
+        type: 'discrete'
+        values:
+          - '2'
+      - key: max_depth
+        type: 'discrete'
+        values:
+          - '4'
+      - key: threshold
+        type: 'discrete'
+        values:
+          - '0.8'
+      - key: id_column
+        type: 'categorical'
+        values:
+          - 'customerID'
+  - title: SVC
+    top: 300
+    left: 500
+
+    type: exec
+
+    library: churn-support-vector-machine
+    library_version: 1.0.0
+
+    command: python3 svc_train.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    params:
+      - key: X_train
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/X_train.csv'
+      - key: X_test
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/X_test.csv'
+      - key: y_train
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/y_train.csv'
+      - key: y_test
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/y_test.csv'
+      - key: inv_reg_strength
+        type: 'discrete'
+        values:
+          - '0.1'
+      - key: gamma
+        type: 'categorical'
+        values:
+          - 'auto'
+      - key: kernel
+        type: 'categorical'
+        values:
+          - 'rbf'
+      - key: threshold
+        type: 'discrete'
+        values:
+          - '0.8'
+      - key: id_column
+        type: 'categorical'
+        values:
+          - 'customerID'
+          
+  - title: Naive Bayes
+    top: 400
+    left: 500
+
+    type: exec
+
+    library: churn-naive-bayes
+    library_version: 1.0.0
+
+    command: python3 naive_bayes_train.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    params:
+      - key: X_train
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/X_train.csv'
+      - key: X_test
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/X_test.csv'
+      - key: y_train
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/y_train.csv'
+      - key: y_test
+        type: 'categorical'
+        values:
+          - '/input/train_test_split/y_test.csv'
+      - key: var_smoothing
+        type: 'discrete'
+        values:
+          - '0.01'
+      - key: threshold
+        type: 'discrete'
+        values:
+          - '0.8'
+      - key: id_column
+        type: 'categorical'
+        values:
+          - 'customerID'
+          
+  - title: compare
+    top: 400
+    left: 700
+
+    type: exec
+
+    library: churn-compare
+    library_version: 1.0.0
+
+    command: python3 compare.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+    params: []
+    conditions:
+    - target: 0.0
+      task:
+      objective: max
+      tag_key: accuracy_score
+      value: ''
+     
+  - title: inference
+    top: 400
+    left: 300
+ 
+    type: deploy
+
+    library: churn-inference
+    library_version: 1.0.0
+
+    command: python3 predict.py
+    kind: webservice
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    accept_files: false
+
+    file_name: predict.py
+    function_name: predict
+    prep_file: ''
+    prep_function: ''
+    input_example:
+      vars: '7590-VHVEG,Female,0,Yes,No,1,No,No phone service,DSL,No,Yes,No,No,No,No,Month-to-month,Yes,Electronic check,29.85,29.85'
+    input_schema:
+      vars: text
+    output_schema:
+      prediction: dict
+relations:
+  - from: S3 Connector
+    to: Data-Preprocessing
+  - from: Data-Preprocessing
+    to: Train Test Split
+  - from: Train Test Split
+    to: Logistic Regression
+  - from: Train Test Split
+    to: SVC
+  - from: Train Test Split
+    to: Random Forest
+  - from: Train Test Split
+    to: Naive Bayes
+  - from: Logistic Regression
+    to: compare
+  - from: SVC
+    to: compare
+  - from: Random Forest
+    to: compare
+  - from: Naive Bayes
+    to: compare
+  - from: compare
+    to: Inference
+  - from: Data-Preprocessing
+    to: Inference

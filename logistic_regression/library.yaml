@@ -1,0 +1,63 @@
+title: Churn Logistic Regression
+version: 1.0.0
+description: use logistic regression to predict churn
+icon: python
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+command: python3 logistic_train.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+language: python3
+
+arguments:
+  - key: X_train
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/X_train.csv'
+  - key: X_test
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/X_test.csv'
+  - key: y_train
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/y_train.csv'
+  - key: y_test
+    type: 'categorical'
+    values:
+      - '/input/Train Test Split/y_test.csv'
+  - key: penalty
+    type: 'categorical'
+    values:
+      - 'elasticnet'
+  - key: l1_ratio
+    type: 'discrete'
+    values:
+      - '0.5'
+  - key: solver
+    type: 'categorical'
+    values:
+      - 'saga'
+  - key: max_iter
+    type: 'discrete'
+    values:
+      - '100'
+  - key: threshold
+    type: 'discrete'
+    values:
+      - '0.8'
+  - key: inv_reg_strength
+    type: 'discrete'
+    values:
+      - '0.4'
+

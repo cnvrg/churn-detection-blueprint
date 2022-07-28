@@ -1,0 +1,43 @@
+title: Churn Data Preprocess
+version: 1.0.0
+description: Encoding, missing value treatment and other preprocessing steps
+icon: python
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+command: python3 data_preprocessing.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+language: python3
+
+arguments:
+  - key: churn_data
+    type: 'categorical'
+    values:
+      - '/Input/s3_connector/churn_data/churn.csv'
+  - key: id_column
+    type: 'categorical'
+    values:
+      - 'customerID'
+  - key: label_encoding
+    type: 'categorical'
+    values:
+      - "PaymentMethod,InternetService"
+  - key: scaler
+    type: 'discrete'
+    values:
+      - 'Minmax'
+  - key: do_scaling
+    type: 'categorical'
+    values:
+       - "Yes"
+

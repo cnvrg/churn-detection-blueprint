@@ -1,0 +1,26 @@
+title: Churn Train Test Split
+version: 1.0.0
+description: splitting the crm data into train and test 
+icon: python
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+command: python3 tts.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+language: python3
+
+arguments:
+  - key: preprocessed_data
+    type: 'categorical'
+    values:
+       - '/input/Data-Preprocessing/data_df.csv'
