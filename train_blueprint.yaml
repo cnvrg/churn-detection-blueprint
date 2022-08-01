@@ -1,6 +1,6 @@
-title: Churn Predict Train
+title: Churn Detection Train
 version: 1.0.0
-description: Training Churn Model to find out, likely to churn customers
+description: Training Churn Model to find out which customers are likely to churn
 long_description: This blueprint chooses the best model out of 4 different algorithms to find out which model has churned, based on the metrics like precision, recall and f1 score.
 
 author: "cnvrg"
@@ -354,7 +354,7 @@ tasks:
         values:
           - 'customerID'
           
-  - title: compare
+  - title: Compare
     top: 400
     left: 700
 
@@ -382,8 +382,8 @@ tasks:
       value: ''
      
   - title: inference
-    top: 400
-    left: 300
+    top: 600
+    left: 700
  
     type: deploy
 
@@ -408,11 +408,12 @@ tasks:
     prep_file: ''
     prep_function: ''
     input_example:
-      vars: '7590-VHVEG,Female,0,Yes,No,1,No,No phone service,DSL,No,Yes,No,No,No,No,Month-to-month,Yes,Electronic check,29.85,29.85'
+      vars: ''
     input_schema:
       vars: text
     output_schema:
       prediction: dict
+
 relations:
   - from: S3 Connector
     to: Data-Preprocessing

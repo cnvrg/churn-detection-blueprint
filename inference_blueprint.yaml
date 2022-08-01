@@ -1,0 +1,44 @@
+title: Churn Detection Inference
+version: 1.0.0
+description: "predicting churn for a dataset using multiple models"
+long_description: "It is the process of finding out whether the customer will churn or not and compare multiple ML classification algorithm as to which one suits the user best"
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - inference
+
+tasks:
+  - title: inference
+    top: 400
+    left: 300
+ 
+    type: deploy
+
+    library: churn-inference
+    library_version: 1.0.0
+
+    command: python3 predict.py
+    kind: webservice
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    accept_files: false
+
+    file_name: predict.py
+    function_name: predict
+    prep_file: ''
+    prep_function: ''
+    input_example:
+      vars: ''
+    input_schema:
+      vars: text
+    output_schema:
+      prediction: dict
+relations: []
