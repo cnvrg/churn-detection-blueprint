@@ -1,4 +1,4 @@
-title: S3 Connector3
+title: S3 Connector
 version: 1.0.0
 description: "Read data from s3"
 icon: python
