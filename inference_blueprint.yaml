@@ -15,7 +15,7 @@ tasks:
  
     type: deploy
 
-    library: churn-inference
+    library: churn-detection-inference
     library_version: 1.0.0
 
     command: python3 predict.py

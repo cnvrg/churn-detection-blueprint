@@ -180,6 +180,7 @@ if kernel == 'linear':
 ############### converting arrays/lists to dataframes and printing the dataframes ###############
 
 y_pred = pd.DataFrame(y_pred, columns=['Predictions'])
+y_pred_proba_df = pd.DataFrame(y_pred_proba, columns=['Prediction Probability'])
 y_cv_pred = pd.DataFrame(y_cv_pred, columns=['CV_Predictions'])
 
 X_test.reset_index(drop=True, inplace=True)
@@ -189,7 +190,7 @@ if id_column != ['None']:
         X_test[id_column[i]] = id_column_list[i]
         
 y_test.reset_index(drop=True, inplace=True)
-result = pd.concat([X_test, y_test, y_pred, y_cv_pred], axis=1)
+result = pd.concat([X_test, y_test, y_pred_proba_df, y_pred, y_cv_pred], axis=1)
 result.to_csv(cnvrg_workdir+'/churn_output.csv', index=False)
 ############## converting arrays/lists to dataframes and printing the dataframes ################
 
