@@ -1,0 +1,11 @@
+.*
+autoload.py
+*.h5
+*.pickle
+*.pt
+*.tar.gz
+*.tar
+/venv
+*Dockerfile*
+/kaggle_connector
+/outputs
