@@ -40,5 +40,5 @@ tasks:
     input_schema:
       vars: text
     output_schema:
-      prediction: dict
+      prediction: text
 relations: []
