@@ -14,9 +14,17 @@ It’s one thing to know that you have a 13% churn rate. But unless you understa
 - threshold is fixed at 0.5
 
 ## Model Artifacts
-- `--data_new` new dataset with encoded and clean values
-- `--final_result` final dataset with predictions
-
+```
+{
+  "0": [
+    {
+      "Churn_Prediction": 0,
+      "Churn_Probability": "0.32",
+      "customerID": "7590-VHVEG"
+    }
+  ]
+}
+```
 ## How to run
 ```
 python3 batch_predict/batch_predict.py --datafile /data/churn_data/data_new.csv --model_dir /data/churn_data/my_model.sav --oh_encoder /data/churn_data/encoded_values_file --label_encoder_file /data/churn_data/ordinal_enc --scaler  /data/churn_data/std_scaler.bin --columns_list /data/churn_data/columns_list.csv --threshold 0.6 --processed_file_col /data/churn_data/processed_col.csv

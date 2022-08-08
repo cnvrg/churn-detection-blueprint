@@ -40,7 +40,7 @@ Naive Bayes classifiers are a collection of classification algorithms based on B
 python3 naive_bayes/nb.py --X_train /input/train_test_split/X_train.csv --X_test /input/train_test_split/X_test.csv --y_train /input/train_test_split/y_train.csv --y_test /input/train_test_split/y_test.csv --var_smoothing  np.logspace(0,-9, num=100)
 ```
 
-## About naive Bayes
+## About Naive Bayes
 [Naive Bayes]https://scikit-learn.org/stable/modules/naive_bayes.html)
 Naive Bayes methods are a set of supervised learning algorithms based on applying Bayes’ theorem with the “naive” assumption of conditional independence between every pair of features given the value of the class variable.
 In spite of their apparently over-simplified assumptions, naive Bayes classifiers have worked quite well in many real-world situations, famously document classification and spam filtering. They require a small amount of training data to estimate the necessary parameters. 

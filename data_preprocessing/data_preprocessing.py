@@ -222,8 +222,8 @@ for colname, coltype in data_df.dtypes.iteritems():
 
         bar_chart = BarChart("Distribution of " + colname +
                              " by Churn Status", x_ticks=x_value)
-        bar_chart.add_series('Not Churned',y_value1)
-        bar_chart.add_series('Churned',y_value2)
+        bar_chart.add_series(y_value1,'Not Churned')
+        bar_chart.add_series(y_value2,'Churned')
         e.create_chart(bar_chart)
     else:
         if colname != 'Churn' and colname not in id_columns.split(','):

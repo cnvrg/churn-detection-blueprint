@@ -83,7 +83,7 @@ This library performs data preprocessing on tabular data and makes it ready to b
 | 0.3147806332528752 | 0.42857142857142855     | 185.3421052631579 | Any             | No comment       | 
 
 - `--ordinal_enc`	label/ordinal encoder saved file after fitting the encoder on training data
-- `--encoded_values_file`	one hot encoder saved file after fitting the encoder on training data
+- `--one_hot_encoder`	one hot encoder saved file after fitting the encoder on training data
 - `--columns_list.csv`	table of 3 columns, one hot encoded columns, label encoded columns and id columns
 
 |    OHE_columns   | id_columns | label_encoded_columns |

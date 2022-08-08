@@ -31,5 +31,4 @@ arguments:
     vars: ''
   input_schema:
     vars: text
-  output_schema:
-    prediction: text
+  output_schema: {}
