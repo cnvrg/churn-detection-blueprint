@@ -70,9 +70,9 @@ else:
 def predict(data):
     
     threshold = 0.5
-    predict_1 = {}
+    predicted_response = {}
     cnt = 0
-    predict_1[cnt] = []
+    predicted_response[cnt] = []
     if isinstance(data['vars'],str):
         
         data = data['vars']
@@ -209,6 +209,6 @@ def predict(data):
     response["Churn_Prediction"] = result.item()
     prob_value = result_proba.item()
     response["Churn_Probability"] = str(prob_value)[0:4]
-    predict_1[cnt].append(response)
+    predicted_response[cnt].append(response)
     cnt=cnt+1
-    return predict_1
+    return predicted_response
