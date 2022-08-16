@@ -1,4 +1,4 @@
-# Churn Analysis (Endpoint)
+# Churn Detection (Endpoint)
 Churn analysis is the process of using data to understand why your customers have stopped using your product or service.
 Analyzing your churn doesn’t only mean knowing what your churn rate is. It’s about figuring out why customers are churning at the rate they are, and how to fix the problem.
 It’s one thing to know that you have a 13% churn rate. But unless you understand which customers are cancelling, why their cancelling, when they’re cancelling, and other data points, it’s really hard to improve, that’s why churn analysis is so important for subscription businesses
