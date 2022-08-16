@@ -27,7 +27,21 @@ It’s one thing to know that you have a 13% churn rate. But unless you understa
 ```
 ## How to run
 ```
-python3 batch_predict/batch_predict.py --datafile /data/churn_data/data_new.csv --model_dir /data/churn_data/my_model.sav --oh_encoder /data/churn_data/encoded_values_file --label_encoder_file /data/churn_data/ordinal_enc --scaler  /data/churn_data/std_scaler.bin --columns_list /data/churn_data/columns_list.csv --threshold 0.6 --processed_file_col /data/churn_data/processed_col.csv
+import json
+request_dict = {'vars':['7590-VHVEG','Female','0','Yes','No','1','No','No phone service','DSL','No','Yes','No','No','No','No','Month-to-month','Yes','Electronic check','29.85','29.85']}
+json.dumps(request_dict)
+
+import http.client
+conn = http.client.HTTPSConnection("inference-10-1.anx6qra9ysplne3dszkzmbu.staging-cloud.cnvrg.io", 443)
+payload = "{\"input_params\":" + json.dumps(request_dict) + "}"
+headers = {
+    'Cnvrg-Api-Key': "4tPfrGjUY2dEqqqdoz2jNHFH",
+    'Content-Type': "application/json"
+    }
+conn.request("POST", "/api/v1/endpoints/ttyehaaewqckev9wbaky", payload, headers)
+res = conn.getresponse()
+data = res.read()
+print(data.decode("utf-8"))
 ```
 ## Sample input
 ```
