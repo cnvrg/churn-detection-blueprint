@@ -283,7 +283,7 @@ percentage_cat_var = num_of_cat_var/data_df.shape[1]
 if do_scaling.lower() == 'yes':
     temp_df = pd.DataFrame()
     for colname, coltype in data_df.dtypes.iteritems():
-        if (len(data_df[colname].unique())/len(data_df[colname]) > 0.2) and (coltype == 'int64' or coltype == 'float64'):
+        if (len(data_df[colname].unique())/len(data_df[colname]) > 0.1) and (coltype == 'int64' or coltype == 'float64'):
             #data_df[colname] = sc.fit_transform(data_df[[colname]])
             temp_df[colname] = data_df[colname]
 
