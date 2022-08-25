@@ -177,9 +177,9 @@ for colname, coltype in data_df.dtypes.iteritems():
 sparsity = (data_df == 0).astype(int).sum(axis=1).sum()/total
 ##################################### charts for X-Variables #####################################
 from cnvrgv2 import Cnvrg, BarChart, Experiment
-cnvrg = Cnvrg()
-myproj = cnvrg.projects.get("customer_churn_analysis")
-e = Experiment()
+cnvrg_v2 = Cnvrg()
+myproj = cnvrg_v2.projects.get("customer_churn_analysis")
+e_v2 = Experiment()
 
 for colname, coltype in data_df.dtypes.iteritems():
     if ((coltype == 'int64') or (coltype == 'float64')) and (len(data_df[colname].unique()) > 0.1*data_df.shape[0]) and colname not in id_columns.split(','):
@@ -224,7 +224,7 @@ for colname, coltype in data_df.dtypes.iteritems():
                              " by Churn Status", x_ticks=x_value)
         bar_chart.add_series(y_value1,'Not Churned')
         bar_chart.add_series(y_value2,'Churned')
-        e.create_chart(bar_chart)
+        e_v2.create_chart(bar_chart)
     else:
         if colname != 'Churn' and colname not in id_columns.split(','):
             categorical_freq = data_df.groupby(
@@ -239,7 +239,7 @@ for colname, coltype in data_df.dtypes.iteritems():
                                  colname + " by Churn Status", x_ticks=x_value)
             bar_chart.add_series(y_value1, 'Not Churned')
             bar_chart.add_series(y_value2, 'Churned')
-            e.create_chart(bar_chart)
+            e_v2.create_chart(bar_chart)
 
 ######################################## one hot encoding = ######################################
 num_of_cat_var = 0
