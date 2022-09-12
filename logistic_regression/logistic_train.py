@@ -198,7 +198,7 @@ var_imp_log.to_csv(cnvrg_workdir+'/important_metrics.csv',index=False)
 
 ################ converting arrays/lists to dataframes and printing the dataframes ###############
 y_pred = pd.DataFrame(y_pred, columns=['Predictions'])
-y_pred_proba_df = pd.DataFrame(y_pred_proba, columns=['Prediction Probability'])
+y_pred_proba_df = pd.DataFrame([round(elem, 4) for elem in y_pred_proba], columns=['Prediction Probability'])
 y_cv_pred = pd.DataFrame(y_cv_pred, columns=['CV_Predictions'])
 X_test.reset_index(drop=True, inplace=True)
 if id_column != ['None']:
