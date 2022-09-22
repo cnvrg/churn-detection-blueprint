@@ -1,0 +1,62 @@
+title: Churn Batch Predict
+version: 1.0.0
+description: Predicting churn for a dataset using saved model
+icon: python
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+command: python3 batch_predict/batch_predict.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+language: python3
+
+arguments:
+  - key: 'datafile'
+    type: 'categorical'
+    values:
+       - '/input/s3_connector/churn_data/data_new.csv'   
+  - key: 'model_dir'
+    type: 'categorical'
+    values:
+       - '/data/churn-data/my_model.sav'
+  - key: 'scaler'
+    type: 'categorical'
+    values:
+       - '/data/churn-data/std_scaler.bin'
+  - key: 'columns_list'
+    type: 'categorical'
+    values:
+       - '/data/churn-data/columns_list.csv'
+  - key: 'threshold'
+    type: 'discrete'
+    values:
+       - '0.6'
+  - key: 'oh_encoder'
+    type: 'categorical'
+    values:
+       - '/data/churn-data/one_hot_encoder'
+  - key: 'label_encoder_file'
+    type: 'categorical'
+    values:
+       - '/data/churn-data/ordinal_enc'
+  - key: 'processed_file_col'
+    type: 'categorical'
+    values:
+       - '/data/churn-data/processed_col.csv'
+  - key: 'do_scaling'
+    type: 'categorical'
+    values:
+       - 'Yes'
+  - key: 'mis_col_type'
+    type: 'categorical'
+    values:
+       - '/input/data_preprocessing/mis_col_type.csv'
