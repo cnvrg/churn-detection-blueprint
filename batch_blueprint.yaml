@@ -54,7 +54,7 @@ tasks:
 
     type: exec
 
-    library: churn-batch-predict
+    library: churn-detection-batch
     library_version: 1.0.0
 
     command: python3 batch.py
@@ -76,15 +76,15 @@ tasks:
       - key: 'model_dir'
         type: 'categorical'
         values:
-          - '/input/s3_connector/churn-data/my_model.sav'
+          - '/input/s3_connector/churn_data/my_model.sav'
       - key: 'scaler'
         type: 'categorical'
         values:
-          - '/input/s3_connector/churn-data/std_scaler.bin'
+          - '/input/s3_connector/churn_data/std_scaler.bin'
       - key: 'columns_list'
         type: 'categorical'
         values:
-          - '/input/s3_connector/churn-data/columns_list.csv'
+          - '/input/s3_connector/churn_data/columns_list.csv'
       - key: 'threshold'
         type: 'discrete'
         values:
@@ -92,15 +92,15 @@ tasks:
       - key: 'oh_encoder'
         type: 'categorical'
         values:
-          - '/input/s3_connector/churn-data/one_hot_encoder'
+          - '/input/s3_connector/churn_data/one_hot_encoder'
       - key: 'label_encoder_file'
         type: 'categorical'
         values:
-          - '/input/s3_connector/churn-data/ordinal_enc'
+          - '/input/s3_connector/churn_data/ordinal_enc'
       - key: 'processed_file_col'
         type: 'categorical'
         values:
-          - '/input/s3_connector/churn-data/processed_col.csv'
+          - '/input/s3_connector/churn_data/processed_col.csv'
       - key: 'do_scaling'
         type: 'categorical'
         values:
@@ -108,7 +108,7 @@ tasks:
       - key: 'mis_col_type'
         type: 'categorical'
         values:
-          - '/input/s3_connector/churn-data/mis_col_type.csv'
+          - '/input/s3_connector/churn_data/mis_col_type.csv'
 
 relations:
   - from: S3 Connector

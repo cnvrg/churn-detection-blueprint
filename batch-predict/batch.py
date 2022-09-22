@@ -1,25 +1,16 @@
-from joblib import dump, load
+from joblib import load
 from sklearn import preprocessing
-from sklearn.preprocessing import MinMaxScaler
 import os
 import random
 import joblib
-from cnvrgv2 import Cnvrg, LineChart
 import matplotlib.pyplot as plt
 from numpy import mean
-from cnvrg.charts import MatrixHeatmap
-from sklearn.model_selection import StratifiedKFold, cross_val_score, KFold, cross_val_predict
-from sklearn.feature_selection import RFECV
-from cnvrg import Experiment
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_curve, auc, roc_auc_score
 import argparse
 import numpy as np
 import pandas as pd
 import warnings
 from sklearn.exceptions import DataConversionWarning
 warnings.filterwarnings(action='ignore', category=DataConversionWarning)
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import LabelEncoder
 
 parser = argparse.ArgumentParser(description="""Preprocessor""")
 parser.add_argument(
@@ -117,7 +108,7 @@ id_column = columns_list_1['id_columns'].dropna().tolist()
 label_encoding_columns = columns_list_1['label_encoded_columns'].dropna().tolist()
 do_scaling = args.do_scaling
 mis_col_type = pd.read_csv(args.mis_col_type)
-######## Data Summarization - Removal of ID Column - Mapping of Dependent Variable ##########
+###### Data Summarization - Removal of ID Column - Mapping of Dependent Variable ######
 
 def dataoveriew(df, message):
     print(f'{message}:\n')
@@ -243,7 +234,6 @@ for bf in id_column:
         processed_file_col.remove(bf)
 
 data_new = data_new[processed_file_col]
-data_new.to_csv(cnvrg_workdir+'/data_new.csv')
 
 percentage_cat_var = num_of_cat_var/data_new.shape[1]
 ################################### feature scaling ###################################
