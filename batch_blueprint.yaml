@@ -1,0 +1,115 @@
+title: Churn Detection Batch
+version: 1.0.0
+description: Training Churn Model to find out which customers are likely to churn
+long_description: This blueprint chooses the best model out of 4 different algorithms to find out which model has churned, based on the metrics like precision, recall and f1 score.
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+tags:
+  - training
+
+tasks:
+  - title: S3 Connector
+    top: 300
+    left: 0
+
+    type: exec
+
+    library: s3-connector
+    library_version: 1.0.0
+
+    command: python s3_connector.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    params:
+      - key: endpoint
+        type: 'categorical'
+        values:
+          - 'http://s3.amazonaws.com download'
+      - key: bucketname
+        type: 'categorical'
+        values:
+          - 'libhub-readme'
+      - key: localdir
+        type: 'categorical'
+        values:
+          - '/cnvrg'
+      - key: prefix
+        type: 'categorical'
+        values:
+          - 'churn_data/'
+
+  - title: Batch-Predict
+    top: 400
+    left: 100
+
+    type: exec
+
+    library: churn-batch-predict
+    library_version: 1.0.0
+
+    command: python3 batch.py
+
+    requirements:
+      cpu: 3.5
+      memory: 8
+      gpu: 0
+      hpu: 0
+
+    image: cnvrg/cnvrg:v5.0
+    language: python3
+
+    params:
+      - key: 'datafile'
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn_data/churn.csv'
+      - key: 'model_dir'
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn-data/my_model.sav'
+      - key: 'scaler'
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn-data/std_scaler.bin'
+      - key: 'columns_list'
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn-data/columns_list.csv'
+      - key: 'threshold'
+        type: 'discrete'
+        values:
+          - '0.6'
+      - key: 'oh_encoder'
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn-data/one_hot_encoder'
+      - key: 'label_encoder_file'
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn-data/ordinal_enc'
+      - key: 'processed_file_col'
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn-data/processed_col.csv'
+      - key: 'do_scaling'
+        type: 'categorical'
+        values:
+          - 'Yes'
+      - key: 'mis_col_type'
+        type: 'categorical'
+        values:
+          - '/input/s3_connector/churn-data/mis_col_type.csv'
+
+relations:
+  - from: S3 Connector
+    to: Batch-Predict

@@ -136,14 +136,14 @@ dimensionality_ratio = data_new.shape[0]/data_new.shape[1]
 
 dataoveriew(data_new, 'Overview of the dataset')
 
-################################ Dropping customer ID column and storing it ##################
+######################### Dropping customer ID column and storing it ##################
 id_column_list = []
 if id_column != ['None'] and id_column != []:
     for i in range(len(id_column)):
         id_column_list.append(data_new[id_column[i]])
         data_new.drop([id_column[i]], axis=1, inplace=True)
 
-################################### Mising value treatment ###################################
+############################# Mising value treatment ##################################
 for colname, coltype in data_new.dtypes.iteritems():
     percentage_unique = len(data_new[colname].dropna().unique())/len(data_new[colname])
     first_value = data_new[colname].dropna().sort_values(ascending=True).unique()[0]
@@ -176,12 +176,12 @@ if label_encoding_columns != ['None']:
         garbage_index = data_new.index[data_new[colname] == 'Garbage-Value-999'].tolist()
         garbage_index_0.append(garbage_index)
 
-################################ defining binary map function ################################
+############################# defining binary map function ############################
 def binary_map(feature):
     return feature.map({'Yes': 1, 'No': 0})
 
 
-########################################## sparsity #########################################
+###################################### sparsity #######################################
 sparsity = 0
 total = 0
 for colname, coltype in data_new.dtypes.iteritems():
@@ -189,7 +189,7 @@ for colname, coltype in data_new.dtypes.iteritems():
         total = total + data_new[colname].shape[0]
 
 sparsity = (data_new == 0).astype(int).sum(axis=1).sum()/total
-############################################ sparsity ####################################
+######################################### sparsity ####################################
 
 cat_var = []
 cat_var = columns_list_1['OHE_columns'].dropna().tolist()
@@ -198,7 +198,7 @@ for colname, coltype in data_new.dtypes.iteritems():
     if coltype == 'object' and (colname not in id_column) and (colname not in cat_var) and (colname not in label_encoding_columns):
         data_new[colname] = pd.DataFrame(binary_map(data_new[colname]), columns=[colname])[colname]
 
-################################### ONE HOT ENCODING #########################################
+################################### ONE HOT ENCODING ##################################
 if os.path.exists(args.oh_encoder):
     
     if cat_var != [] or os.path.exists(args.oh_encoder) == True:
@@ -214,7 +214,7 @@ if os.path.exists(args.oh_encoder):
         for colname in cat_var:
             data_new = data_new.drop([colname], axis=1)
 
-################################### LABEL ENCODING ##########################################
+################################### LABEL ENCODING ####################################
 cnt_garb = 0
 if os.path.exists(args.label_encoder_file):
     
@@ -233,7 +233,7 @@ for colname, coltype in data_new.dtypes.iteritems():
     if 'Garbage-Value-999' in colname:
         data_new = data_new.drop(colname, 1,errors='ignore')
     
-################################### reordering data #########################################
+################################### reordering data ###################################
 
 percentage_cat_var = num_of_cat_var/data_new.shape[1]
 processed_file_col.remove('Churn')
@@ -246,7 +246,7 @@ data_new = data_new[processed_file_col]
 data_new.to_csv(cnvrg_workdir+'/data_new.csv')
 
 percentage_cat_var = num_of_cat_var/data_new.shape[1]
-####################################### feature scaling ######################################
+################################### feature scaling ###################################
 if os.path.exists(scaler):
     
     sc = load(scaler)
@@ -264,9 +264,9 @@ if os.path.exists(scaler):
             for colname1 in data_new:
                 if(colname0 == colname1):
                     data_new[colname1] = temp_df[colname0]
-############################### one hot encoding of new dataset ##############################
+########################### one hot encoding of new dataset ###########################
 
-#################################### Loading the saved model #################################
+############################## Loading the saved model ################################
 loaded_model = joblib.load(model_dir)
 result = np.where(loaded_model.predict_proba(data_new)[:, 1] > threshold, 1, 0)
 result_proba = loaded_model.predict_proba(data_new)[:, 1]
@@ -280,4 +280,4 @@ y_proba = pd.DataFrame(result_proba, columns=['Prediction Percentage'])
 final_result = pd.concat([data_new, y_pred], axis=1)
 final_result = pd.concat([final_result, y_proba], axis=1)
 final_result.to_csv(cnvrg_workdir+'/churn.csv', index=False)
-##################################### Loading the saved model ###############################
+################################ Loading the saved model ##############################

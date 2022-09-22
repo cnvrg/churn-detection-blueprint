@@ -1,4 +1,4 @@
-title: Churn Batch Predict
+title: Churn Detection Batch
 version: 1.0.0
 description: Predicting churn for a dataset using saved model
 icon: python
@@ -8,7 +8,7 @@ author_email: "libhub@cnvrg.io"
 
 tags:
   - training
-command: python3 batch_predict/batch_predict.py
+command: python3 batch.py
 
 requirements:
   cpu: 3.5
@@ -27,15 +27,15 @@ arguments:
   - key: 'model_dir'
     type: 'categorical'
     values:
-       - '/data/churn-data/my_model.sav'
+       - '/input/s3_connector/churn-data/my_model.sav'
   - key: 'scaler'
     type: 'categorical'
     values:
-       - '/data/churn-data/std_scaler.bin'
+       - '/input/s3_connector/churn-data/std_scaler.bin'
   - key: 'columns_list'
     type: 'categorical'
     values:
-       - '/data/churn-data/columns_list.csv'
+       - '/input/s3_connector/churn-data/columns_list.csv'
   - key: 'threshold'
     type: 'discrete'
     values:
@@ -43,15 +43,15 @@ arguments:
   - key: 'oh_encoder'
     type: 'categorical'
     values:
-       - '/data/churn-data/one_hot_encoder'
+       - '/input/s3_connector/churn-data/one_hot_encoder'
   - key: 'label_encoder_file'
     type: 'categorical'
     values:
-       - '/data/churn-data/ordinal_enc'
+       - '/input/s3_connector/churn-data/ordinal_enc'
   - key: 'processed_file_col'
     type: 'categorical'
     values:
-       - '/data/churn-data/processed_col.csv'
+       - '/input/s3_connector/churn-data/processed_col.csv'
   - key: 'do_scaling'
     type: 'categorical'
     values:
@@ -59,4 +59,4 @@ arguments:
   - key: 'mis_col_type'
     type: 'categorical'
     values:
-       - '/input/data_preprocessing/mis_col_type.csv'
+       - '/input/s3_connector/mis_col_type.csv'
