@@ -1,7 +1,7 @@
 title: Churn Detection Train
 version: 1.0.0
-description: Training Churn Model to find out which customers are likely to churn
-long_description: This blueprint chooses the best model out of 4 different algorithms to find out which model has churned, based on the metrics like precision, recall and f1 score.
+description: Train a churn-detector model to identify customers or clients likely to churn
+long_description: Select the optimum model out of four different algorithms that best predicts whether a customer or client is likely to churn, based on your custom data and metrics like precision, recall, and F1 score.
 
 author: "cnvrg"
 author_email: "libhub@cnvrg.io"
