@@ -9,6 +9,4 @@ Complete the following steps to deploy this churn-detector endpoint:
    - Use the Try it Live section with a relevant user ID to check the model’s prediction accuracy.
    - Use the bottom integration panel to integrate your API with your code by copying in your code snippet.
 
-An API endpoint that detects about-to-churn customers among a larger customer pool has now been deployed.
-
-Click [here](link) for this blueprint's detailed run instructions. To learn how this blueprint was created, click [here](https://github.com/cnvrg/churn-detection-blueprint).
+An API endpoint that detects about-to-churn customers among a larger customer pool has now been deployed. To learn how this blueprint was created, click [here](https://github.com/cnvrg/churn-detection-blueprint).
