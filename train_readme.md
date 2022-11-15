@@ -32,6 +32,4 @@ Complete the following steps to train the churn-detector model:
    * Use the Try it Live section with a relevant user ID to check the model’s prediction accuracy.
    * Use the bottom integration panel to integrate your API with your code by copying in your code snippet.
    
-A custom model and an API endpoint which detect about-to-churn customers among a larger customer pool have now been trained and deployed.
-
-Click [here](link) for this blueprint's detailed run instructions. To learn how this blueprint was created, click [here](https://github.com/cnvrg/churn-detection-blueprint).
+A custom model and an API endpoint which detect about-to-churn customers among a larger customer pool have now been trained and deployed. To learn how this blueprint was created, click [here](https://github.com/cnvrg/churn-detection-blueprint).
