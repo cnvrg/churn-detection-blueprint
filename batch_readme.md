@@ -1,32 +1,29 @@
-You can use this blueprint to predict the probability of a customer churning. You can replace the model and data preprocessing artifacts (scalers, encoders etc) in the s3 bucket "libhub-readme" under the directory "churn_data".
+Use this blueprint to run in batch mode a pretrained tailored model that predicts whether a customer or client is likely to churn. The model can be trained using this counterpart’s [training blueprint](https://metacloud.cloud.cnvrg.io/marketplace/blueprints/churn-detection-train), after which the trained model can be uploaded to the S3 Connector.
 
-In order to run this blueprint, you need to provide a list files (artifacts and test file) and upload them in s3 and accordingly modify the parameters in yaml file:
-- churn_data
-    -churn.csv
-    -columns_list.csv
-    -mis_col_type.csv
-    -my_model.sav
-    -one_hot_encoder
-    -ordinal_enc
-    -processed_col.csv
-    -std_scaler.bin
+To run this blueprint, replace the model (optional) and data preprocessing artifacts (such as scalers and encoders) in the S3 Connector’s `churn_data` directory by providing a list of files (artifacts and test file) and modifying the parameters in YAML file accordingly.
 
-1. Click on `Use Blueprint` button
-2. You will be redirected to your blueprint flow page
-3. In the flow, edit the following tasks to provide your data:
+Complete the following steps to run this churn-detector blueprint in batch mode:
+1.	Click **Use Blueprint** button. The cnvrg Blueprint Flow page displays.
+2.	Click the **S3 Connector** task to display its dialog.
+   - Within the **Parameters** tab, provide the following Key-Value pair information:
+     - Key: `bucketname` − Value: provide the data bucket name
+     - Key: `prefix` – Value: provide the main path to the churn data folder
+   - Click the **Advanced** tab to change resources to run the blueprint, as required.
+3.	Click the **Batch Predict** task to display its dialog.
+   - Within the **Parameters** tab, provide the following Key-Value pair information:
+     - Key: `datafile` − Value: provide the S3 path to the churn data file in the following format: ` /input/s3_connector/churn_data/churn.csv`
+     - Key: `model_dir` − Value: provide the S3 pagh to the saved model in the following format: `/input/s3_connector/churn_data/my_model.sav`
+     - Key: `scaler` − Value: provide the S3 path to the scaler in the following format: `/input/s3_connector/churn_data/std_scaler.bin`
+     - Key: `columns_list` − Value: provide the S3 path to the columns list in the following format: `/input/s3_connector/churn_data/columns_list.csv`
+     - Key: `oh_encoder` − Value: provide the S3 path to the one hot encoder in the following format: `/input/s3_connector/churn_data/one_hot_encoder`
+     - Key: `label_encoder_file` − Value: provide the S3 path to the label encoder file in the following format: `/input/s3_connector/churn_data/ordinal_enc`
+     - Key: `processed_file_col` − Value: provide the S3 path to the processed file column in the following format: ` /input/s3_connector/churn_data/processed_col.csv`
+     - Key: ` mis_col_type` − Value: provide the S3 path to the missed column type in the following format: `/input/s3_connector/churn_data/mis_col_type.csv`
+     NOTE: You can use prebuilt data example paths provided.
+   - Click the **Advanced** tab to change resources to run the blueprint, as required.
+4.	Click the **Run** button. The cnvrg software deploys a churn-detector model that predicts churn likelihood probabilities for customers and clients.
+5.	Track the blueprint’s real-time progress in its Experiments page, which displays artifacts such as logs, metrics, hyperparameters, and algorithms.
+6.	Select **Batch Inference > Experiments > Artifacts** and locate the batch output CSV file.
+7.	Select the **churn.csv** File Name, click the Menu icon, and select **Open File** to view the output CSV file.
 
-   In the `S3 Connector` task:
-    * Under the `bucketname` parameter provide the bucket name of the data (libhub readme)
-    * Under the `prefix` parameter provide the main path to where the images are located
-   In the `Batch-Predict` task:
-    *  Under the `datafile` parameter provide the path to the directory including the prefix you provided in the `S3 Connector`, it should look like:
-       `/input/s3_connector/<prefix>/churn_data/`
-
-**NOTE**: You can use prebuilt data examples paths that are already provided
-
-4. Click on the 'Run Flow' button
-5. In a few minutes you will deploy a churn detection model and predict the probability of a customer being churned and download the CSV file with the information about the scenery. Go to output artifacts and check for the output csv file.
-
-Congrats! You have deployed a custom model that predicts the probability of a customer churning!
-
-[See here how we created this blueprint](https://github.com/cnvrg/churn-detection-blueprint)
+A custom churn-detector model that can predict churn likelihood probabilities for customers and clients has now been deployed in batch mode. To learn how this blueprint was created, click [here](https://github.com/cnvrg/churn-detection-blueprint).
