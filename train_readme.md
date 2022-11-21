@@ -1,34 +1,35 @@
-You can use this blueprint to clean and validate data in order to further train multiple models to predict results for if a customer is likely to churn or not using your own customized dataset. In order to clean the data you will be needed to provide:
-`--churn_data` raw data uploaded by the user on the platform
-`--id_column` get the name of the id column by the user
-`--label_encoding_cols` list of columns to be label encoded by the user
-`--scaler` the type of scaler to be used
-`--do_scaling` whether scaling will be done or not 
+Use this blueprint to clean and validate customized data, train multiple models using a preprocessed dataset, and deploy a new API endpoint that predicts whether a customer or client is likely to churn. To train this model with your data, provide one `churn_data` folder in the S3 Connector to store the data, which contains the `churn.csv` training data file and the `data_new.csv` test data file on which to make predictions.
 
-You would need to provide 1 folder in s3 where you can keep your training data
-- churn_data: Folder containing the training data "churn.csv" and the test data file on which to predict, "data_new.csv"
-
-Directions for use:
-1. Click on Use Blueprint button
-2. You will be redirected to your blueprint flow page
-3. In the flow, edit the following tasks to provide your data:
-
-   In the `S3 Connector` task:
-    * Under the `bucketname` parameter provide the bucket name of the data
-    * Under the `prefix` parameter provide the main path to where the input file is located
-
-   In the `Data-Preprocessing` task:
-    *  Under the `churn_data` parameter provide the path to the input folder including the prefix you provided in the `S3 Connector`, it should look like:
-       `/input/s3_connector/<prefix>/churn_data`
-
-**NOTE**: You can use prebuilt data examples paths that are already provided
-
-4. Click on the 'Run Flow' button
-5. In a few minutes you will train a new churn detection model and deploy as a new API endpoint
-6. Go to the 'Serving' tab in the project and look for your endpoint
-7. You can use the `Try it Live` section with a data point similar to your input data (in terms of variables and data types) to check your model
-8. You can also integrate your API with your code using the integration panel at the bottom of the page
-
-Congrats! You have trained and deployed a custom model that detects about-to-churn customers amongst the total list of customers!
-
-[See here how we created this blueprint](https://github.com/cnvrg/churn-detection-blueprint)
+Complete the following steps to train the churn-detector model:
+1. Click the **Use Blueprint** button. The cnvrg Blueprint Flow page displays.
+2. In the flow, click the **S3 Connector** task to display its dialog.
+   * Within the **Parameters** tab, provide the following Key-Value pair information:
+     * Key: `bucketname` - Value: enter the data bucket name
+     * Key: `prefix` - Value: provide the main path to the CSV file folder
+   * Click the **Advanced** tab to change resources to run the blueprint, as required.
+3. Return to the flow and click the **Data Preprocessing** task to display its dialog.
+   * Within the **Parameters** tab, provide the following Key-Value pair information:
+     * Key: `churn_data` – Value: provide the path to the CSV file including the S3 prefix
+     * `/input/s3_connector/<prefix>/churn_data` − ensure the CSV file path adheres this format
+     NOTE: You can use prebuilt data example paths already provided.
+   * Click the **Advanced** tab to change the resources to run the blueprint, as required.
+4. Click the **Train Test Split** task to display its dialog.
+   * Within the **Parameters** tab, provide the following Key-Value pair information:
+      * Key: `--preprocessed_data` – Value: the path to the CSV file from the Data Preprocessing task
+	   * `/input/data_preprocessing/data_df.csv` − ensure the data path adheres this format
+      NOTE: You can use prebuilt data example paths already provided.
+   * Click the **Advanced** tab to change resources to run the blueprint, as required.
+5. Click the **Compare** task to display its dialog.
+   * Click the **Conditions** tab to set the following metric conditions information, as required:
+     * `--accuracy_score` − set the accuracy, either the fraction (default) or the count (normalize=false) of correct predictions
+     * `--recall_score` − set the model’s performance (sensitivity) based on the correct classification percentages of relevant results; a value of 1 is considered a high, ideal classifier
+     * `--precision` − set the model’s performance based on the percentage of pertinent results; a value of 1 is considered a high, good classifier
+     * `--f1_score` − set this statistical measure to rate the model's performance. Defined as the harmonic mean of precision and recall, the F1 score is considered a better measure than accuracy. The F1 score becomes 1 only when precision and recall are both 1.
+   * Click the **Advanced** tab to change resources to run the blueprint, as required.
+6. Click the **Run** button. The cnvrg software launches the training blueprint as set of experiments, generating a trained churn-detector model and deploying it as a new API endpoint.
+7. Track the blueprint's real-time progress in its experiments page, which displays artifacts such as logs, metrics, hyperparameters, and algorithms.
+8. Click the **Serving** tab in the project, locate your endpoint, and complete one or both of the following options:
+   * Use the Try it Live section with a relevant user ID to check the model’s prediction accuracy.
+   * Use the bottom integration panel to integrate your API with your code by copying in your code snippet.
+   
+A custom model and an API endpoint which detect about-to-churn customers among a larger customer pool have now been trained and deployed. To learn how this blueprint was created, click [here](https://github.com/cnvrg/churn-detection-blueprint).
