@@ -1,4 +1,4 @@
-Use this blueprint to clean and validate customized data, train multiple models using a preprocessed dataset, and deploy a new API endpoint that predicts whether a customer or client is likely to churn. To train this model with your data, provide one `churn_data` folder in the S3 Connector to store the data, which contains the `churn.csv` training data file to train the model and the `data_new.csv` test data file on which to make predictions.
+Use this blueprint to clean and validate customized data, train multiple models using a preprocessed dataset, and deploy a new API endpoint that predicts whether a customer or client is likely to churn. To train this model with your data, provide one `churn_data` folder in the S3 Connector to store the data, which contains the `churn.csv` training data file and the `data_new.csv` test data file on which to make predictions.
 
 Complete the following steps to train the churn-detector model:
 1. Click the **Use Blueprint** button. The cnvrg Blueprint Flow page displays.
@@ -21,10 +21,10 @@ Complete the following steps to train the churn-detector model:
    * Click the **Advanced** tab to change resources to run the blueprint, as required.
 5. Click the **Compare** task to display its dialog.
    * Click the **Conditions** tab to set the following metric conditions information, as required:
-     * `--accuracy_score` − computes the accuracy (number of correctly classified data instances compared to the total data instances)
-     * `--f1_score` − provides a statistical measure to rate a model's performance
-     * `--precision` − measures the model’s performance based on pertinent results percentages; ideally, precision should be 1
-     * `--recall_score` − measures the model’s performance based on correct classifications of relevant results percentages; known as sensitivity, should also be 1
+     * `--accuracy_score` − set the accuracy, either the fraction (default) or the count (normalize=false) of correct predictions
+     * `--recall_score` − set the model’s performance (sensitivity) based on the correct classification percentages of relevant results; a value of 1 is considered a high, ideal classifier
+     * `--precision` − set the model’s performance based on the percentage of pertinent results; a value of 1 is considered a high, good classifier
+     * `--f1_score` − set this statistical measure to rate the model's performance. Defined as the harmonic mean of precision and recall, the F1 score is considered a better measure than accuracy. The F1 score becomes 1 only when precision and recall are both 1.
    * Click the **Advanced** tab to change resources to run the blueprint, as required.
 6. Click the **Run** button. The cnvrg software launches the training blueprint as set of experiments, generating a trained churn-detector model and deploying it as a new API endpoint.
 7. Track the blueprint's real-time progress in its experiments page, which displays artifacts such as logs, metrics, hyperparameters, and algorithms.
