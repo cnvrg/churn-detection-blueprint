@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Set the token pattern you want to search for
-TOKEN_PATTERN="your_token_pattern_here"
+# Set the token patterns you want to search for
+TOKEN_PATTERN_1="\b[A-Za-z0-9]{32}\b"
+TOKEN_PATTERN_2='^[A-Za-z0-9+/]{20}==[A-Za-z0-9+/]{6}==$'
 
 # Get the commit hashes in reverse chronological order
 COMMITS=$(git rev-list --all)
@@ -15,8 +16,8 @@ for COMMIT in $COMMITS; do
 
     # Loop through each changed file
     for FILE in $FILES; do
-        # Check if the file contains the token pattern
-        if grep -q "$TOKEN_PATTERN" "$FILE"; then
+        # Check if the file contains either token pattern
+        if grep -q -E "$TOKEN_PATTERN_1|$TOKEN_PATTERN_2" "$FILE"; then
             echo "Token pattern found in file: $FILE"
         fi
     done
